@@ -4,6 +4,7 @@ import com.neo.domain.CTModel;
 import com.neo.domain.TestSuite;
 import com.neo.service.Rank;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/optimization")
 public class DockerController {
 	
-    @RequestMapping(value = "/sort", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     // ACTS 3.0 version
     public TestSuite sort(HttpServletRequest request) {
         BufferedReader br;
@@ -71,5 +71,10 @@ public class DockerController {
         rank.sort();
         Instant end = Instant.now();
         return new TestSuite(rank.getSortedTestsuite(), Duration.between(start, end).toMillis());
+    }
+
+    @GetMapping("/check")
+    public String healthCheck(){
+        return "ok";
     }
 }
